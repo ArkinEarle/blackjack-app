@@ -1,7 +1,5 @@
-package com.example.myapplication
+package com.arkinearle.pixelblackjack
 
-import android.graphics.drawable.Drawable
-import android.media.Image
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.TypedValue
@@ -9,12 +7,11 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import android.util.Log
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
-import kotlinx.coroutines.android.awaitFrame
+import com.arkinearle.pixelblackjack.R
 import org.w3c.dom.Text
-import kotlin.concurrent.timer
 
 
 class Card(val suit: String, val rank: String) {
@@ -67,7 +64,7 @@ class MainActivity : AppCompatActivity() {
     private var dTotal: Int = 0
     private var pAceCount: Int = 0
     private var dAceCount: Int = 0
-    private val drawnCardsP = mutableListOf<String>()
+    private var drawnCardsP: Int = 0
     private var drawnCardsD: Int = 0
     private lateinit var hiddenCard: Card
     private  var cardBackId: Int = 0
@@ -75,19 +72,22 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var dHandText: TextView
     private lateinit var pHandText: TextView
+    private lateinit var logText: TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val btnHit = findViewById<Button>(R.id.btn_hit)
-        val btnStand = findViewById<Button>(R.id.btn_stand)
-        val btnRestart = findViewById<Button>(R.id.btn_restart)
+        val btnHit = findViewById<ImageButton>(R.id.btn_hit)
+        val btnStand = findViewById<ImageButton>(R.id.btn_stand)
+        val btnRestart = findViewById<ImageButton>(R.id.btn_restart)
 
         pHandText = findViewById(R.id.player_hand)
         dHandText = findViewById(R.id.dealer_hand)
+        logText = findViewById(R.id.update_txt)
 
+//        val logText = findViewById<TextView>(R.id.log_txt)
         setupHands()
 
         btnHit.setOnClickListener {
@@ -109,16 +109,24 @@ class MainActivity : AppCompatActivity() {
 
         btnRestart.setOnClickListener {
             // Handle click for btnRestart
+            dShoe = Deck(6)
+            dShoe.shuffle()
+            pTurn = true
+            pTotal = 0
+            dTotal = 0
+            pAceCount = 0
+            dAceCount = 0
             drawnCardsD = 0
+            drawnCardsP = 0
             clearViews()
             setupHands()
         }
     }
 
-    private fun disableButtons(vararg buttons: Button) {
+    private fun disableButtons(vararg buttons: ImageButton) {
         buttons.forEach { it.isEnabled = false }
     }
-    private fun enableButtons(vararg buttons: Button) {
+    private fun enableButtons(vararg buttons: ImageButton) {
         buttons.forEach { it.isEnabled = true }
     }
 
@@ -128,9 +136,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupHands() {
-        val btnHit = findViewById<Button>(R.id.btn_hit)
-        val btnStand = findViewById<Button>(R.id.btn_stand)
-        val btnRestart = findViewById<Button>(R.id.btn_restart)
+        val btnHit = findViewById<ImageButton>(R.id.btn_hit)
+        val btnStand = findViewById<ImageButton>(R.id.btn_stand)
+        val btnRestart = findViewById<ImageButton>(R.id.btn_restart)
 
         enableButtons(btnHit, btnStand, btnRestart)
         dShoe = Deck(6)
@@ -140,19 +148,29 @@ class MainActivity : AppCompatActivity() {
         dTotal = 0
         pAceCount = 0
         dAceCount = 0
+        drawnCardsD = 0
+        drawnCardsP = 0
         dTurn = true
+
         drawCard("player")
         drawCard("dealer")
         drawCard("player")
         drawCard("dealer")
+
 
 //        disableButtons(btnHit, btnStand)
+        if (pTurn) {
+            logText.text = "New Hand"
+        }
 
         if (pTotal == 21) {
+            pTurn = false
             disableButtons(btnHit, btnStand)
+            dealerHit()
         }
-        dTurn = false
 
+
+        dTurn = false
     }
 
     // Function to convert dp to px
@@ -179,8 +197,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun dealerHit() {
-        val btnHit = findViewById<Button>(R.id.btn_hit)
-        val btnStand = findViewById<Button>(R.id.btn_stand)
+        val btnHit = findViewById<ImageButton>(R.id.btn_hit)
+        val btnStand = findViewById<ImageButton>(R.id.btn_stand)
         disableButtons(btnHit, btnStand)
 
         revealHidden()
@@ -196,30 +214,38 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun determineWinner() {
-        val pHandText = findViewById<TextView>(R.id.player_hand)
-        val dHandText = findViewById<TextView>(R.id.dealer_hand)
+
+        updateHandText("dealer")
+        updateHandText("player")
 
         if (pTotal > 21) {
-            dHandText.text = "Dealer wins: $dTotal Ace count: $dAceCount"
-            pHandText.text = "Player busted: $pTotal Ace count: $pAceCount"
+//            dHandText.text = "Dealer wins: $dTotal Ace count: $dAceCount"
+//            pHandText.text = "Player busted: $pTotal Ace count: $pAceCount"
+            logText.text = "Dealer wins"
         } else if (dTotal > 21) {
-            dHandText.text = "Dealer busted: $dTotal Ace count: $dAceCount"
-            pHandText.text = "Player wins: $pTotal Ace count: $pAceCount"
+//            dHandText.text = "Dealer busted: $dTotal Ace count: $dAceCount"
+//            pHandText.text = "Player wins: $pTotal Ace count: $pAceCount"
+            logText.text = "Player wins"
         } else if (pTotal == dTotal) {
-            dHandText.text = "Dealer ties: $dTotal Ace count: $dAceCount"
-            pHandText.text = "Player ties: $pTotal Ace count: $pAceCount"
+//            dHandText.text = "Dealer ties: $dTotal Ace count: $dAceCount"
+//            pHandText.text = "Player ties: $pTotal Ace count: $pAceCount"
+            logText.text = "Tie"
         } else if (pTotal == 21 && dTotal < 21) {
-            dHandText.text = "Dealer loses: $dTotal Ace count: $dAceCount"
-            pHandText.text = "Player wins: $pTotal Ace count: $pAceCount"
+//            dHandText.text = "Dealer loses: $dTotal Ace count: $dAceCount"
+//            pHandText.text = "Player wins: $pTotal Ace count: $pAceCount"
+            logText.text = "Player wins"
         } else if (dTotal == 21 && pTotal < 21) {
-            dHandText.text = "Dealer has more: $dTotal Ace count: $dAceCount"
-            pHandText.text = "Player loses: $pTotal Ace count: $pAceCount"
+//            dHandText.text = "Dealer has more: $dTotal Ace count: $dAceCount"
+//            pHandText.text = "Player loses: $pTotal Ace count: $pAceCount"
+            logText.text = "Dealer wins"
         } else if (dTotal < 21 && pTotal < dTotal) {
-            dHandText.text = "Dealer has more: $dTotal Ace count: $dAceCount"
-            pHandText.text = "Player loses: $pTotal Ace count: $pAceCount"
+//            dHandText.text = "Dealer has more: $dTotal Ace count: $dAceCount"
+//            pHandText.text = "Player loses: $pTotal Ace count: $pAceCount"
+            logText.text = "Dealer wins"
         } else if (pTotal < 21 && pTotal > dTotal) {
-            dHandText.text = "Dealer loses: $dTotal Ace count: $dAceCount"
-            pHandText.text = "Player has more: $pTotal Ace count: $pAceCount"
+//            dHandText.text = "Dealer loses: $dTotal Ace count: $dAceCount"
+//            pHandText.text = "Player has more: $pTotal Ace count: $pAceCount"
+            logText.text = "Player wins"
         }
     }
 
@@ -233,10 +259,15 @@ class MainActivity : AppCompatActivity() {
         val cOffsetP = -20
         if (owner == "player") {
             if (lastCard != null) {
-                drawnCardsP.add(lastCardString)
-                displayCard(pHandLayout, lastCardString, cOffsetP)
-                updateHand(lastCard.rank, "player")
-
+                drawnCardsP += 1
+                logText.text = "Player drew: ${lastCard.rank}"
+                if (drawnCardsP == 1) {
+                    displayCard(pHandLayout, lastCardString, 0)
+                    updateHand(lastCard.rank, "player")
+                } else {
+                    displayCard(pHandLayout, lastCardString, cOffsetP)
+                    updateHand(lastCard.rank, "player")
+                }
             } else {
                 println("No cards left in the deck.")
             }
@@ -251,8 +282,13 @@ class MainActivity : AppCompatActivity() {
                     hiddenCard = lastCard
                     displayCard(dHandLayout, cardBack, cOffsetD)
                     updateHand(lastCard.rank, "dealer")
+                } else if (drawnCardsD == 1) {
+                    logText.text = "Drew: ${lastCard.rank}"
+                    displayCard(dHandLayout, lastCardString, 0)
+                    updateHand(lastCard.rank, "dealer")
                 } else {
-                    displayCard(dHandLayout, lastCardString, cOffsetP)
+                    logText.text = "Drew: ${lastCard.rank}"
+                    displayCard(dHandLayout, lastCardString, cOffsetD)
                     updateHand(lastCard.rank, "dealer")
                 }
 //                } else {
@@ -265,7 +301,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
+    private fun updateHandText(owner: String) {
+        if (owner == "player") {
+            if (pAceCount < 1) {
+                pHandText.text = pTotal.toString()
+            } else {
+                pHandText.text = "${pTotal - 10}/${pTotal}"
+            }
+        } else if (owner == "dealer") {
+            if (dAceCount < 1 || pTurn) {
+                dHandText.text = dTotal.toString()
+            } else {
+                dHandText.text = "${dTotal - 10}/${dTotal}"
+            }
+        }
+    }
 
     private fun updateHand(cardRank: String, owner: String) {
 
@@ -283,21 +333,22 @@ class MainActivity : AppCompatActivity() {
             else -> cardRank.toIntOrNull() ?: 0
         }
 
-        val btnHit = findViewById<Button>(R.id.btn_hit)
-        val btnStand = findViewById<Button>(R.id.btn_stand)
+        val btnHit = findViewById<ImageButton>(R.id.btn_hit)
+        val btnStand = findViewById<ImageButton>(R.id.btn_stand)
 
         if (owner == "player" && pTurn) {
             pTotal += cardRankInt
             if (pTotal > 21) {
                 checkAces("player")
             } else if (pTotal == 21) {
-                pTurn = false
                 disableButtons(btnHit, btnStand)
-                pHandText.text = "Player hand value: $pTotal Ace count: $pAceCount"
-//                revealHidden()
-                dealerHit()
+                updateHandText("player")
+                if (drawnCardsP != 2) {
+                    pTurn = false
+                    dealerHit()
+                }
             } else {
-                pHandText.text = "Player hand value: $pTotal Ace count: $pAceCount"
+                updateHandText("player")
             }
 
         }
@@ -314,48 +365,51 @@ class MainActivity : AppCompatActivity() {
             } else if (dTotal == 21) {
                 if (pTurn) {
                     dTurn = false
-                    dHandText.text = "Dealer hand value: ${dTotal} Ace count: $dAceCount"
+                    updateHandText("dealer")
                 }
             }else {
-                dHandText.text = "Dealer hand value: $dTotal Ace count: $dAceCount"
+                updateHandText("dealer")
             }
         }
     }
 
     private fun checkAces(owner: String) {
-        val btnHit = findViewById<Button>(R.id.btn_hit)
-        val btnStand = findViewById<Button>(R.id.btn_stand)
+        val btnHit = findViewById<ImageButton>(R.id.btn_hit)
+        val btnStand = findViewById<ImageButton>(R.id.btn_stand)
 
         if (owner == "player") {
             if (pTotal > 21) {
                 if (pAceCount > 0) {
-                    pTotal -= 10
                     pAceCount -= 1
+                    pTotal -= 10
                     checkAces("player")
                 } else {
-                    pHandText.text = "Player hand value: $pTotal Ace count: $pAceCount"
+                    updateHandText("player")
                     disableButtons(btnHit, btnStand)
-                    pTurn = false
+
 //                    revealHidden()
-                    dealerHit()
+                    if (drawnCardsP != 2) {
+                        pTurn = false
+                        dealerHit()
+                    }
                 }
             } else {
-                pHandText.text = "Player hand value: $pTotal Ace count: $pAceCount"
+                updateHandText("player")
             }
         }
 
         if (owner == "dealer") {
             if (dTotal > 21) {
                 if (dAceCount > 0) {
-                    dTotal -= 10
                     dAceCount -= 1
+                    dTotal -= 10
                     checkAces("dealer")
                 } else {
-                    dHandText.text = "Dealer hand value: $dTotal Ace count: $dAceCount"
+                    updateHandText("dealer")
                     dTurn = false
                 }
             } else {
-                dHandText.text = "Dealer hand value: $dTotal Ace count: $dAceCount"
+                updateHandText("dealer")
             }
         }
     }

@@ -1,0 +1,28 @@
+<!-- outer_shape.xml -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <solid android:color="@color/navy" />
+            <stroke
+                android:width="2dp"
+                android:color="@color/neon_pink" />
+            <corners
+                android:topLeftRadius="45dp"
+                android:topRightRadius="45dp"
+                android:bottomLeftRadius="45dp"
+                android:bottomRightRadius="45dp" />
+        </shape>
+    </item>
+    <item android:gravity="center">
+        <shape android:shape="oval">
+            <solid android:color="@color/white" />
+            <stroke
+                android:width="2dp"
+                android:color="@color/black" />
+            <size
+                android:width="50dp"
+                android:height="50dp" />
+            <corners android:radius="25dp" />
+        </shape>
+    </item>
+</layer-list>

@@ -7,25 +7,8 @@
     android:gravity="center"
     android:orientation="vertical"
     android:padding="16dp"
+    android:background="#006400"
     tools:context=".MainActivity">
-
-    <TextView
-        android:id="@+id/dealer_hand"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:padding="8dp"
-        android:text="Dealer's Hand"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/player_hand"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:padding="8dp"
-        android:text="Player's Hand"
-        android:textSize="18sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,55 +16,106 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/update_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:padding="8dp"
+            android:text="Player wins"
+            android:textSize="30sp"
+            android:background="@drawable/rounded_bottom_border"/>
+
         <LinearLayout
             android:id="@+id/d_hand"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:orientation="horizontal">
 
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/dealer_hand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:padding="8dp"
+            android:translationY="-60dp"
+            android:text="Dealer's Hand"
+            android:textSize="30sp"
+            android:textColor="@color/white"
+            android:background="@drawable/text_outline"
+            android:fontFamily="@font/pixelify_sans_regular"/>
+
+
         <LinearLayout
             android:id="@+id/p_hand"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal"/>
+            android:layout_weight="2"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/player_hand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:padding="8dp"
+            android:translationY="-60dp"
+            android:text="Player's Hand"
+            android:textSize="30sp"
+            android:textColor="@color/white"
+            android:background="@drawable/text_outline"
+            android:fontFamily="@font/pixelify_sans_regular"/>
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="5"
+        android:layout_weight="4"
         android:orientation="horizontal">
 
-        <Button
+        <ImageButton
             android:id="@+id/btn_hit"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="8dp"
             android:layout_weight="1"
-            android:text="Hit" />
+            android:background="@drawable/button_selector"
+            android:scaleX=".9"
+            android:scaleY=".9"
+            android:src="@drawable/hit_button" />
 
-        <Button
+        <ImageButton
             android:id="@+id/btn_stand"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="8dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/stand_button"
+            android:background="@drawable/button_selector"
             android:layout_weight="1"
-            android:text="Stand" />
+            android:layout_gravity="center_horizontal"
+            android:scaleX=".9"
+            android:scaleY=".9"
+            android:layout_marginTop="8dp" />
 
-        <Button
+        <ImageButton
             android:id="@+id/btn_restart"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="8dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/restart_button"
+            android:background="@drawable/button_selector"
             android:layout_weight="1"
-            android:text="Restart" />
+            android:layout_gravity="center_horizontal"
+            android:scaleX=".9"
+            android:scaleY=".9"
+            android:layout_marginTop="8dp" />
+
+
     </LinearLayout>
 </LinearLayout>
