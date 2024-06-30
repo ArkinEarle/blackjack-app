@@ -140,7 +140,8 @@ class MainActivity : AppCompatActivity() {
         val btnStand = findViewById<ImageButton>(R.id.btn_stand)
         val btnRestart = findViewById<ImageButton>(R.id.btn_restart)
 
-        enableButtons(btnHit, btnStand, btnRestart)
+        enableButtons(btnHit, btnStand)
+        disableButtons(btnRestart)
         dShoe = Deck(6)
         dShoe.shuffle()
         pTurn = true
@@ -187,7 +188,7 @@ class MainActivity : AppCompatActivity() {
         val hiddenCardString = "${hiddenCard?.suit}_${hiddenCard?.rank}"
         dTotal += hiddenValue
 
-        // remove hidden card back
+//         remove hidden card back
         findViewById<LinearLayout>(R.id.d_hand).removeView(findViewById(cardBackId))
 
         // Display hidden card
@@ -202,6 +203,7 @@ class MainActivity : AppCompatActivity() {
         disableButtons(btnHit, btnStand)
 
         revealHidden()
+        checkAces("dealer")
         dTurn = true
 
         while (dTotal < 17) {
@@ -215,8 +217,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun determineWinner() {
 
-        updateHandText("dealer")
+        val btnRestart = findViewById<ImageButton>(R.id.btn_restart)
+
+        if (pTotal <= 21) {
+            updateHandText("dealer")
+        }
         updateHandText("player")
+
 
         if (pTotal > 21) {
 //            dHandText.text = "Dealer wins: $dTotal Ace count: $dAceCount"
@@ -247,6 +254,8 @@ class MainActivity : AppCompatActivity() {
 //            pHandText.text = "Player has more: $pTotal Ace count: $pAceCount"
             logText.text = "Player wins"
         }
+
+        enableButtons(btnRestart)
     }
 
     private fun drawCard(owner: String) {
@@ -260,7 +269,7 @@ class MainActivity : AppCompatActivity() {
         if (owner == "player") {
             if (lastCard != null) {
                 drawnCardsP += 1
-                logText.text = "Player drew: ${lastCard.rank}"
+                logText.text = "Drew: ${lastCard.rank}"
                 if (drawnCardsP == 1) {
                     displayCard(pHandLayout, lastCardString, 0)
                     updateHand(lastCard.rank, "player")
@@ -280,6 +289,7 @@ class MainActivity : AppCompatActivity() {
 
                 if (pTurn && drawnCardsD == 2) {
                     hiddenCard = lastCard
+//                    println("hiddenCard: ${hiddenCard.rank}") // print to see hidden
                     displayCard(dHandLayout, cardBack, cOffsetD)
                     updateHand(lastCard.rank, "dealer")
                 } else if (drawnCardsD == 1) {
@@ -338,6 +348,7 @@ class MainActivity : AppCompatActivity() {
 
         if (owner == "player" && pTurn) {
             pTotal += cardRankInt
+            checkAces("player")
             if (pTotal > 21) {
                 checkAces("player")
             } else if (pTotal == 21) {
@@ -356,13 +367,13 @@ class MainActivity : AppCompatActivity() {
         if (owner == "dealer" && dTurn) {
             if (drawnCardsD != 2) {
                 dTotal += cardRankInt
+                checkAces("dealer")
             } else {
                 hiddenValue = cardRankInt
             }
 
-            if (dTotal > 21) {
-                checkAces("dealer")
-            } else if (dTotal == 21) {
+            checkAces("dealer")
+            if (dTotal == 21) {
                 if (pTurn) {
                     dTurn = false
                     updateHandText("dealer")
@@ -390,7 +401,8 @@ class MainActivity : AppCompatActivity() {
 //                    revealHidden()
                     if (drawnCardsP != 2) {
                         pTurn = false
-                        dealerHit()
+//                        revealHidden()
+                        determineWinner()
                     }
                 }
             } else {

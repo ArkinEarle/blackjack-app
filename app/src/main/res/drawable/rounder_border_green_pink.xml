@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/navy" />
+    <solid android:color="@color/bg_green" />
     <stroke
-        android:width="2dp"
+        android:width="4dp"
         android:color="@color/neon_pink" /> <!-- Change the color to your preferred outline color -->
     <corners android:radius="16dp" /> <!-- Optional: set corner radius if you want rounded corners -->
 </shape>

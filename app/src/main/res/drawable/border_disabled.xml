@@ -15,13 +15,13 @@
     </item>
     <item android:gravity="center">
         <shape android:shape="oval">
-            <solid android:color="@color/grey" />
+            <solid android:color="@color/white" />
             <stroke
-                android:width="2dp"
-                android:color="@color/black" />
+                android:width="5dp"
+                android:color="@color/navy" />
             <size
-                android:width="50dp"
-                android:height="50dp" />
+                android:width="55dp"
+                android:height="55dp" />
             <corners android:radius="25dp" />
         </shape>
     </item>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Rounded corners and border -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/dark_green" />
+            <stroke
+                android:width="4dp"
+                android:color="@color/neon_pink" /> <!-- Border color -->
+            <corners android:radius="16dp" /> <!-- Rounded corners radius -->
+        </shape>
+    </item>
+
+    <!-- Horizontal line -->
+    <item>
+        <shape android:shape="line">
+            <stroke
+                android:width="4dp"
+                android:color="@color/neon_pink" /> <!-- Line color -->
+        </shape>
+    </item>
+
+</layer-list>

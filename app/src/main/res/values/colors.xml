@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="white">#dedede</color>
     <color name="navy">#133137</color>
+    <color name="light_navy">#3096ab</color>
     <color name="neon_pink">#ed9191</color>
     <color name="reddish">#800000</color>
     <color name="dark_blue">#0000CD</color>
     <color name="grey">#80827d</color>
-    <color name="wierd_green">#5d9606</color>
+    <color name="dark_green">#013220</color>
+    <color name="bg_green">#006400</color>
 </resources>

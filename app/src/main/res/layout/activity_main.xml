@@ -1,121 +1,205 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:background="#006400"
+    android:background="@color/black"
     tools:context=".MainActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
+    <!-- Bottom Background Image -->
+    <ImageView
+        android:id="@+id/bg_bottom"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:src="@drawable/rounder_border_green_pink"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Top Background Image -->
+
+    <!-- Existing Layout converted to ConstraintLayout -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@android:color/transparent"
+        android:padding="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <ImageView
+            android:id="@+id/bg_top"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:scaleType="center"
+            android:src="@drawable/border_with_divider"
+            app:layout_constraintBottom_toBottomOf="@+id/p_hand"
+            app:layout_constraintEnd_toEndOf="@+id/d_hand"
+            app:layout_constraintStart_toStartOf="@+id/p_hand"
+            app:layout_constraintTop_toTopOf="@+id/d_hand" />
 
         <TextView
             android:id="@+id/update_txt"
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:background="@drawable/rounded_bottom_border"
+            android:fontFamily="@font/silkscreen_regular"
+            android:gravity="center"
             android:padding="8dp"
             android:text="Player wins"
+            android:textColor="@color/white"
             android:textSize="30sp"
-            android:background="@drawable/rounded_bottom_border"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.506"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-4dp"
+            android:background="@drawable/rounded_bottom_border"
+            android:fontFamily="@font/silkscreen_regular"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="Player"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.506"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bg_top" />
+
+        <TextView
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="-4dp"
+            android:background="@drawable/rounded_top_border"
+            android:fontFamily="@font/silkscreen_regular"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="dealer"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toTopOf="@+id/bg_top"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.506"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <LinearLayout
             android:id="@+id/d_hand"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:orientation="horizontal">
-
-
-        </LinearLayout>
+            android:layout_width="326dp"
+            android:layout_height="218dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/player_hand"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/dealer_hand"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="100dp"
+            android:background="@drawable/rounded_top_border"
+            android:fontFamily="@font/silkscreen_regular"
+            android:gravity="center"
             android:padding="8dp"
-            android:translationY="-60dp"
-            android:text="Dealer's Hand"
-            android:textSize="30sp"
+            android:text="10/21"
             android:textColor="@color/white"
-            android:background="@drawable/text_outline"
-            android:fontFamily="@font/pixelify_sans_regular"/>
-
-
-        <LinearLayout
-            android:id="@+id/p_hand"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:orientation="horizontal">
-
-        </LinearLayout>
+            android:textSize="30sp"
+            android:translationY="2dp"
+            android:translationZ="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/player_hand"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_bottom_border"
+            android:fontFamily="@font/silkscreen_regular"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="10/21"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:translationY="-2dp"
+            android:translationZ="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dealer_hand" />
+
+        <LinearLayout
+            android:id="@+id/p_hand"
+            android:layout_width="326dp"
+            android:layout_height="218dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dealer_hand" />
+
+        <LinearLayout
+            android:id="@+id/button_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:padding="8dp"
-            android:translationY="-60dp"
-            android:text="Player's Hand"
-            android:textSize="30sp"
-            android:textColor="@color/white"
-            android:background="@drawable/text_outline"
-            android:fontFamily="@font/pixelify_sans_regular"/>
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
-    </LinearLayout>
+            <ImageButton
+                android:id="@+id/btn_hit"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_selector"
+                android:padding="35dp"
+                android:scaleType="centerInside"
+                android:scaleX=".9"
+                android:scaleY=".9"
+                android:src="@drawable/hit_button_vector" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="4"
-        android:orientation="horizontal">
+            <ImageButton
+                android:id="@+id/btn_stand"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_selector"
+                android:padding="35dp"
+                android:scaleType="centerInside"
+                android:scaleX=".9"
+                android:scaleY=".9"
+                android:src="@drawable/stand_button_vector" />
 
-        <ImageButton
-            android:id="@+id/btn_hit"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="8dp"
-            android:layout_weight="1"
-            android:background="@drawable/button_selector"
-            android:scaleX=".9"
-            android:scaleY=".9"
-            android:src="@drawable/hit_button" />
+            <ImageButton
+                android:id="@+id/btn_restart"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_selector"
+                android:padding="28dp"
+                android:scaleType="centerInside"
+                android:scaleX=".9"
+                android:scaleY=".9"
+                android:src="@drawable/restart_button_vector" />
 
-        <ImageButton
-            android:id="@+id/btn_stand"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@drawable/stand_button"
-            android:background="@drawable/button_selector"
-            android:layout_weight="1"
-            android:layout_gravity="center_horizontal"
-            android:scaleX=".9"
-            android:scaleY=".9"
-            android:layout_marginTop="8dp" />
+        </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/btn_restart"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@drawable/restart_button"
-            android:background="@drawable/button_selector"
-            android:layout_weight="1"
-            android:layout_gravity="center_horizontal"
-            android:scaleX=".9"
-            android:scaleY=".9"
-            android:layout_marginTop="8dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-    </LinearLayout>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

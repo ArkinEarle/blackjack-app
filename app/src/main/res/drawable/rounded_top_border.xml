@@ -5,8 +5,8 @@
         android:width="4dp"
         android:color="@color/neon_pink" /> <!-- Dark green color for the border -->
     <corners
-        android:topLeftRadius="0dp"
-        android:topRightRadius="0dp"
-        android:bottomLeftRadius="16dp"
-        android:bottomRightRadius="16dp" /> <!-- Adjust the radius as needed -->
+        android:topLeftRadius="16dp"
+        android:topRightRadius="16dp"
+        android:bottomLeftRadius="0dp"
+        android:bottomRightRadius="0dp" /> <!-- Adjust the radius as needed -->
 </shape>
